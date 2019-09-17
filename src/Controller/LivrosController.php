@@ -51,7 +51,6 @@ class LivrosController extends AppController
     public function add()
     {   
         $livro = $this->Livros->newEntity();
-
         $options = [];
         $generos = $this->Livros->Generos->find('all')
                     ->select(['id', 'nome'])
@@ -62,7 +61,9 @@ class LivrosController extends AppController
         $livro->genero = $options;
         if ($this->request->is('post')) {
             $livro = $this->Livros->patchEntity($livro, $this->request->getData());
-            if ($this->Livros->save($livro)) {
+            $livro->id_genero = (int) $this->request->getData()["genero_id"];
+            $response = $this->Livros->save($livro, ['associated' => ['Generos.ID']]);
+            if ($response) {
                 $this->Flash->success(__('The livro has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
