@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Livro $livro
  */
 
-use App\Controller\GenerosController;
-
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
@@ -20,7 +18,7 @@ use App\Controller\GenerosController;
         <?php
             echo $this->Form->control('nome');
             echo $this->Form->control('qtd_paginas');
-            echo $this->Form->control('id_genero');
+            echo $this->Form->control('genero_id', array('type'=>'select','options'=>$livro->genero));
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

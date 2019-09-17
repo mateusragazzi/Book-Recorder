@@ -23,7 +23,7 @@
         <?php
             echo $this->Form->control('nome');
             echo $this->Form->control('qtd_paginas');
-            echo $this->Form->control('id_genero');
+            echo $this->Form->control('genero_id', array('type'=>'select','options'=>$livro->genero));
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

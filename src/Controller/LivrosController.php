@@ -49,8 +49,17 @@ class LivrosController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
+    {   
         $livro = $this->Livros->newEntity();
+
+        $options = [];
+        $generos = $this->Livros->Generos->find('all')
+                    ->select(['id', 'nome'])
+                    ->all();
+        foreach($generos as $g) {
+            $options[$g->id] = $g->nome;
+        };
+        $livro->genero = $options;
         if ($this->request->is('post')) {
             $livro = $this->Livros->patchEntity($livro, $this->request->getData());
             if ($this->Livros->save($livro)) {
@@ -75,6 +84,14 @@ class LivrosController extends AppController
         $livro = $this->Livros->get($id, [
             'contain' => ['generos']
         ]);
+        $options = [];
+        $generos = $this->Livros->Generos->find('all')
+                    ->select(['id', 'nome'])
+                    ->all();
+        foreach($generos as $g) {
+            $options[$g->id] = $g->nome;
+        };
+        $livro->genero = $options;
         if ($this->request->is(['patch', 'post', 'put'])) {
             $livro = $this->Livros->patchEntity($livro, $this->request->getData());
             if ($this->Livros->save($livro)) {
